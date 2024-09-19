@@ -56,6 +56,13 @@ pipeline {
         }
             
         stage('Déploiement intégration') {
+            when {
+                branch 'master'
+                beforeOptions true
+                beforeInput true
+                beforeAgent true
+            }
+
             agent any
             input {
                 message 'Voulez vous déployer vers un datacenter ?'
@@ -68,7 +75,17 @@ pipeline {
             steps {
                 echo "Déploiement intégration $DATACENTER"
                 unstash 'app'
-                sh "cp *.jar /home/dthibau/Formations/Jenkins/MyWork/Serveurs/${DATACENTER}.jar"   
+                script {
+                    def jsonData = readJSON file: './deployment.json'
+                    echo "jsonData ${jsonData}"
+                    integrationUrl = jsonData.integrationURL
+                    dataCenters = jsonData.dataCenters
+                    echo "integration ${integrationUrl}"
+                    echo "dataCenters ${dataCenters}"
+                    for (dataCenter in dataCenters) {
+                        sh "cp *.jar ${integrationUrl}/${datacenter}.jar"   
+                    }
+                }
             }
         }
      }
