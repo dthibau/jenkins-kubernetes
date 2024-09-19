@@ -79,7 +79,7 @@ pipeline {
                     def dataCenters = jsonData.dataCenters
                     echo "integration ${integrationUrl}"
                     echo "dataCenters ${dataCenters}"
-                    for (dataCenter in dataCenters) {
+                    for (def dataCenter in dataCenters) {
                         sh "cp *.jar ${integrationUrl}/${datacenter}.jar"   
                     }
                 }
