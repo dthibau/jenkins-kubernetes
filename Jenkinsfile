@@ -65,11 +65,8 @@ pipeline {
 
             agent any
             input {
-                message 'Voulez vous déployer vers un datacenter ?'
+                message 'Voulez vous déployer vers les datacenters ?'
                 ok 'Déployer'
-                parameters {
-                    choice choices: ['Paris', 'Lyon', 'Bruxelles'], name: 'DATACENTER'
-                }
             }
 
             steps {
