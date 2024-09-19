@@ -75,8 +75,8 @@ pipeline {
                 script {
                     def jsonData = readJSON file: './deployment.json'
                     echo "jsonData ${jsonData}"
-                    integrationUrl = jsonData.integrationURL
-                    dataCenters = jsonData.dataCenters
+                    def integrationUrl = jsonData.integrationURL
+                    def dataCenters = jsonData.dataCenters
                     echo "integration ${integrationUrl}"
                     echo "dataCenters ${dataCenters}"
                     for (dataCenter in dataCenters) {
