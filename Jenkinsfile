@@ -68,7 +68,7 @@ pipeline {
             steps {
                 echo "Déploiement intégration $DATACENTER"
                 unstash 'app'
-                sh "cp *.jar /home/dthibau/Formations/MyWork/Serveurs/${DATACENTER}.jar"   
+                sh "cp *.jar /home/dthibau/Formations/Jenkins/MyWork/Serveurs/${DATACENTER}.jar"   
             }
         }
      }
