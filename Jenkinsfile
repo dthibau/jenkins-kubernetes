@@ -70,7 +70,7 @@ pipeline {
             }
 
             steps {
-                echo "Déploiement intégration $DATACENTER"
+                echo "Déploiement intégration vers les datacenters"
                 unstash 'app'
                 script {
                     def jsonData = readJSON file: './deployment.json'
