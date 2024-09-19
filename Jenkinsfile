@@ -56,12 +56,12 @@ pipeline {
         }
             
         stage('Déploiement intégration') {
-            when {
+           /* when {
                 branch 'master'
                 beforeOptions true
                 beforeInput true
                 beforeAgent true
-            }
+            }*/
 
             agent any
             input {
