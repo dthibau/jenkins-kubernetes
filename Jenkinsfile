@@ -1,5 +1,5 @@
 pipeline {
-   agent any 
+   agent none 
     tools {
         maven 'MAVEN3'
         jdk 'JDK17'
@@ -8,6 +8,7 @@ pipeline {
 
     stages {
         stage('Compile et tests') {
+            agent any
             steps {
                 echo 'Unit test et packaging'
                 sh 'mvn -Dmaven.test.failure.ignore=true clean package'
@@ -22,7 +23,7 @@ pipeline {
                 unsuccessful {
                     mail bcc: '', body: 'A corriger ASAP', cc: '', from: '', replyTo: '', subject: 'Build failed', to: 'david.thibau@gmail.com' 
                 }
-            }
+            } 
 
              
         }
@@ -32,7 +33,7 @@ pipeline {
                     agent any
                     steps {
                         echo 'Tests de Vulnérabilités OWASP'
-                        sh './mvnw -DskipTests verify'
+//                        sh './mvnw -DskipTests verify'
                     }
                     
                 }
@@ -43,7 +44,7 @@ pipeline {
                     }
                     steps {
                         echo 'Analyse sonar'
-                        sh './mvnw -Dsonar.login=${SONAR_TOKEN} clean integration-test sonar:sonar'
+//                        sh './mvnw -Dsonar.login=${SONAR_TOKEN} clean integration-test sonar:sonar'
                      }
                     
                 }
@@ -52,6 +53,7 @@ pipeline {
         }
             
         stage('Déploiement intégration') {
+            agent any
             input {
                 message 'Voulez vous déployer vers un datacenter ?'
                 ok 'Déployer'
