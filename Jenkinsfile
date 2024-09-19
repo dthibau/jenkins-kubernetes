@@ -80,7 +80,7 @@ pipeline {
                     echo "integration ${integrationUrl}"
                     echo "dataCenters ${dataCenters}"
                     for (def dataCenter in dataCenters) {
-                        sh "cp *.jar ${integrationUrl}/${datacenter}.jar"   
+                        sh "cp *.jar ${integrationUrl}/${dataCenter}.jar"   
                     }
                 }
             }
