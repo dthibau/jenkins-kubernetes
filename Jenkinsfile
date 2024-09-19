@@ -19,6 +19,9 @@ pipeline {
                 }
                 success {
                     archiveArtifacts artifacts: 'application/target/*.jar', followSymlinks: false
+                    dir('application/target') {
+                        stash includes: '*.jar', name: 'app'
+                    }    
                 }
                 unsuccessful {
                     mail bcc: '', body: 'A corriger ASAP', cc: '', from: '', replyTo: '', subject: 'Build failed', to: 'david.thibau@gmail.com' 
@@ -64,10 +67,10 @@ pipeline {
 
             steps {
                 echo "Déploiement intégration $DATACENTER"
-                
+                unstash 'app'
+                sh "cp *.jar /home/dthibau/Formations/MyWork/Serveurs/${DATACENTER}.jar"   
             }
         }
-
      }
     
 }
