@@ -29,14 +29,21 @@ pipeline {
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
+                    agent any
                     steps {
                         echo 'Tests de Vulnérabilités OWASP'
+                        sh './mvnw -DskipTests verify'
                     }
                     
                 }
                  stage('Analyse Sonar') {
-                     steps {
+                    agent any
+                    environment {
+                        SONAR_TOKEN = credentials('SONAR_TOKEN')
+                    }
+                    steps {
                         echo 'Analyse sonar'
+                        sh './mvnw -Dsonar.login=${SONAR_TOKEN} clean integration-test sonar:sonar'
                      }
                     
                 }
