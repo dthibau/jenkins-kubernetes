@@ -67,6 +67,19 @@ pipeline {
             }
             
         }
+        stage('Push vers dockerhub') {
+            agent any
+            steps {
+                echo 'Push vers dockerhub'
+                unstash 'app'
+                script {
+                    def dockerImage = docker.build("dthibau/multi-module",".");
+                    docker.withRegistry('https://registry.hub.docker.com', 'dthibau_docker') {
+                        dockerImage.push "$BRANCH_NAME"
+                    }             
+                }
+            }
+        }
         stage('Read Deployment Info') {
             agent any
 
