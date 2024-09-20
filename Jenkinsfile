@@ -9,14 +9,16 @@ pipeline {
     stages {
         stage('Compile et tests') {
             agent {
-                docker {
-                    image 'openjdk:17-alpine'
-                    args '-v $HOME/.m2:/root/.m2'
+                kubernetes {
+                    inheritFrom 'jdk17-agent'
                 }
             }
             steps {
-                echo 'Unit test et packaging'
-                sh './mvnw -Dmaven.test.failure.ignore=true clean package'
+                container(name: 'openjdk-17') {
+                    echo 'Unit test et packaging'
+                    sh './mvnw -Dmaven.test.failure.ignore=true clean package'
+                }
+
             }
             post {
                 always {
