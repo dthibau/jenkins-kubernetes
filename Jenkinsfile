@@ -11,7 +11,12 @@ pipeline {
 
     stages {
         stage('Compile et tests') {
-            agent any
+            agent {
+                docker {
+                    image 'maven'
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 echo 'Unit test et packaging'
                 sh 'mvn -Dmaven.test.failure.ignore=true clean package'
