@@ -11,7 +11,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven'
-                    args '-v /home/dthibau/Formations/Jenkins/MyWork/.m2:/root/.m2'
+                    // args '-v /home/dthibau/Formations/Jenkins/MyWork/.m2:/root/.m2'
                 }
             }
             steps {
