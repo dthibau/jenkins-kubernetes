@@ -3,10 +3,7 @@ def dataCenters
 
 pipeline {
    agent none 
-    tools {
-        maven 'MAVEN3'
-        jdk 'JDK17'
-    }
+
 
 
     stages {
@@ -42,6 +39,10 @@ pipeline {
             parallel {
                 stage('Vulnérabilités') {
                     agent any
+                    tools {
+                        maven 'MAVEN3'
+                        jdk 'JDK17'
+                    }
                     steps {
                         echo 'Tests de Vulnérabilités OWASP'
 //                        sh './mvnw -DskipTests verify'
@@ -53,6 +54,10 @@ pipeline {
                     environment {
                         SONAR_TOKEN = credentials('SONAR_TOKEN')
                     }
+                    tools {
+                        maven 'MAVEN3'
+                        jdk 'JDK17'
+                }
                     steps {
                         echo 'Analyse sonar'
 //                        sh './mvnw -Dsonar.login=${SONAR_TOKEN} clean integration-test sonar:sonar'
@@ -95,7 +100,6 @@ pipeline {
             }*/
 
             agent any
-
 
             steps {
                 echo "Déploiement intégration vers les datacenters"
