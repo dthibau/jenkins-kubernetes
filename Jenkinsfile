@@ -16,7 +16,7 @@ pipeline {
             }
             steps {
                 echo 'Unit test et packaging'
-                sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+                sh './mvnw -Dmaven.test.failure.ignore=true clean package'
             }
             post {
                 always {
