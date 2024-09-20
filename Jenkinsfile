@@ -10,8 +10,8 @@ pipeline {
         stage('Compile et tests') {
             agent {
                 docker {
-                    image 'maven'
-                    // args '-v /home/dthibau/Formations/Jenkins/MyWork/.m2:/root/.m2'
+                    image 'openjdk:17-alpine'
+                    args '-v $HOME/.m2:/root/.m2'
                 }
             }
             steps {
